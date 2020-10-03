@@ -7,6 +7,6 @@
         {{ register_form.as_p }}
         <br>
         <input class="form-control" type="submit" value="зарегистрироваться">
-        <a class="btn btn-link" href="{% urk 'auth:login' %}" >вход"</a>
+        <a class="btn btn-link" href="{% url 'auth:login' %}" >вход"</a>
     </form>
 {% endblock %}
