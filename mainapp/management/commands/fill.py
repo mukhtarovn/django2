@@ -10,22 +10,23 @@ JSON_PATH = 'mainapp/json'
 
 
 def load_from_json(file_name):
-    with open(os.path.join (JSON_PATH, file_name + '.json'), 'r') as infile:
-        return json.load (infile)
+    with open(os.path.join(JSON_PATH, file_name + '.json'), 'r', encoding='utf-8') as infile:
+        return json.load(infile)
 
 class Command (BaseCommand):
     def handle(self, *args, **options):
-        categories = load_from_json ('categories')
+        categories = load_from_json('categories')
 
         ProductCategory.objects.all().delete()
-        new_category = ProductCategory(**categories)
-        new_category.save()
+        for category in categories:
+            new_category = ProductCategory(**category)
+            new_category.save()
 
         products = load_from_json('products')
 
         Product.objects.all().delete()
         for product in products:
-            category_name = product["category"]
+            category_name = product['category']
             # Получаем категорию по имени
             _category = ProductCategory.objects.get(name=category_name)
             # Заменяем название категории объектом
@@ -34,4 +35,4 @@ class Command (BaseCommand):
             new_product.save()
 
         # Создаем суперпользователя при помощи менеджера модели
-        ShopUser.objects.create_superuser(username='django', password='geekbrains', age=30)
+        #super_user =ShopUser.objects.create_superuser(username='django', password='geekbrains', age=30)
