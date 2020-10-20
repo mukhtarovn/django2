@@ -11,7 +11,7 @@
         <input class="form-control" type="submit" value="войти">
     </form>
     <button class="btn btn-round form-control">
-        <a href="{$url auth:register %}" class=""> зарегестрироваться </a>
+        <a href="{% url 'auth:register' %}" class=""> зарегестрироваться </a>
     </button>
 
 {% endblock %}
