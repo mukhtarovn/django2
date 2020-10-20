@@ -20,11 +20,11 @@
             пользователь
           {% endif %}
           <button>
-            <a href="url 'admin:user_update' object.pk">редактировать</a>
+            <a href="{%url 'admin:user_update' object.pk%}">редактировать</a>
             </a>
           </button>
           <button>
-            <a href="url 'admin:user_delete' object.pk">удалить</a>
+            <a href="{%url 'admin:user_delete' object.pk%}">удалить</a>
           </button>
         </div>
         <div class="user_name">
