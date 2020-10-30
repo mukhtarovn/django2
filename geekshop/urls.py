@@ -15,21 +15,22 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
-
+from django.urls import path, include, re_path
 
 from django.conf import settings
 
 import mainapp.views as mainapp
 
 urlpatterns = [
-    path ('', mainapp.main, name='main'),
-    path ('products/', include('mainapp.urls', namespace='products')),
-    path ('product/', include ('mainapp.urls', namespace='product')),
-    path ('auth/', include('authapp.urls', namespace='auth')),
-    path ('contact/', mainapp.contact, name='contact'),
-    path ('basket/', include('basketapp.urls', namespace='basket')),
-    path ('admin/', include('adminapp.urls', namespace='admin')),
+    re_path (r'^$', mainapp.main, name='main'),
+    re_path ('^products/', include('mainapp.urls', namespace='products')),
+    re_path ('^product/', include ('mainapp.urls', namespace='product')),
+    re_path ('^auth/', include('authapp.urls', namespace='auth')),
+    re_path ('^contact/', mainapp.contact, name='contact'),
+    re_path ('^basket/', include('basketapp.urls', namespace='basket')),
+    re_path ('^admin/', include('adminapp.urls', namespace='admin')),
+    re_path(r'^order/', include('ordersapp.urls', namespace='order')),
+    path ('', include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:
