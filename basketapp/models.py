@@ -12,6 +12,10 @@ class Basket(models.Model):
     quantity = models.PositiveIntegerField(default=0)
     add_datetime = models.DateTimeField(auto_now_add=True)
 
+    @staticmethod
+    def get_item(pk):
+        return Basket.objects.get(pk=pk)
+
     @property
     def product_cost(self):
         return self.product.price * self.quantity
@@ -31,3 +35,26 @@ class Basket(models.Model):
     @staticmethod
     def get_items(user):
         return Basket.objects.filter(user=user).order_by('product__category')
+
+    @staticmethod
+    def get_product (user,product):
+        return Basket.objects.filter(user=user, product=product)
+
+    @classmethod
+    def get_product_quantity(cls, user):
+        basket_items = cls.get_items(user)
+        basket_items_dic = {}
+        [basket_items_dic.update({item.product: item.quantity}) for item in basket_items]
+
+        return basket_items_dic
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            self.product.quantity -= self.quantity - \
+                                     self.__class__.get_item (self.pk).quantity
+        else:
+            self.product.quantity -= self.quantity
+        self.product.save ()
+        super (self.__class__, self).save (*args, **kwargs)
+
+
