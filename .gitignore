@@ -1,1 +1,11 @@
-/geekshop/
+.idea
+*.pyc
+__pycache__
+db.sqlite3
+media/
+project/settings.py
+.DS_store
+venv
+env
+receipt.rtf
+./.env

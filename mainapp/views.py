@@ -29,16 +29,17 @@ def get_hot_product():
 
 def get_same_products(hot_product):
     same_products = Product.objects.filter(category=hot_product.category_id).\
-                                    exclude(pk=hot_product.pk)[:3]
+                                    exclude(pk=hot_product.pk).select_related('category')[:3]
 
     return same_products
 
 
 
 def main(request):
-    title = 'продукты'
+    title = 'главная'
+
     content = {
-        'title': title
+        'title': title,
     }
     return render(request, 'mainapp/index.html', content)
 
